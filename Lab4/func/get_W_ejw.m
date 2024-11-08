@@ -10,7 +10,7 @@ function [w, W_ejw]=get_W_ejw(N, num, do_plot)
     mask = logical([1, zeros(1,(num-3)/2), 1, zeros(1,(num-3)/2), 1]);
     W_ejw(mask)=N;
 
-    W_ejw(~mask) = (1-exp(-1j*w(~mask)*N)./(1-exp(-1j*w(~mask))));
+    W_ejw(~mask) = ((1-exp(-1j*w(~mask)*N))./(1-exp(-1j*w(~mask))));
 
     if do_plot
         figure
