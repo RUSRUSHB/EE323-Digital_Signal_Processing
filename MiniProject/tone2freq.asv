@@ -1,0 +1,41 @@
+function freq = tone2freq(tone, nOctave, rising)
+    
+    if ~ismember(tone, 1:7)
+        error('InputError:InvalidTone', 'tone must be an integer between 1 and 7');
+    end
+    
+    if ~ismember(nOctave, -4:4)
+        error('InputError:InvalidNOctave', 'nOctave must be an integer between -4 and 4')
+    end
+
+    if ~ismember(nOctave, -1:1)
+        error('InputError:InvalidRising', 'rising must be an integer between -1 and 1')
+    end
+
+    
+    persistent tone2temper;
+    % Don't need to initialize it every time
+
+    if isempty(tone2temper)
+        tone2temper = [0,2,4,5,7,9,11];
+        % mapping from number to position in 12 Equal Temperament
+    end
+
+    num = tone2temper(tone) + ;
+    
+    flag_lowerOctave = 0;
+    flag_higherOctave = 0;
+        
+    if num <=0
+        num = num + 12;
+        flag_lowerOctave = 1;
+    end
+    
+    if num > 12
+        num = num - 12;
+        flag_higherOctave = 1;
+    end
+
+    freq = 440*2^(num/12+nOctave-flag_lowerOctave+flag_higherOctave);
+
+end
